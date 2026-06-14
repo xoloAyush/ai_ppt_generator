@@ -14,6 +14,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
+import { Route as ApiInngestRouteImport } from './routes/api/inngest'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
@@ -41,6 +42,11 @@ const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   path: '/demo/tanstack-query',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiInngestRoute = ApiInngestRouteImport.update({
+  id: '/api/inngest',
+  path: '/api/inngest',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthLoginRoute = AuthLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/login': typeof AuthLoginRoute
+  '/api/inngest': typeof ApiInngestRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -65,6 +72,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/login': typeof AuthLoginRoute
+  '/api/inngest': typeof ApiInngestRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -75,6 +83,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
   '/_auth/login': typeof AuthLoginRoute
+  '/api/inngest': typeof ApiInngestRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -85,6 +94,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/login'
+    | '/api/inngest'
     | '/demo/tanstack-query'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
@@ -93,6 +103,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/login'
+    | '/api/inngest'
     | '/demo/tanstack-query'
     | '/api/auth/$'
   id:
@@ -102,6 +113,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/contact'
     | '/_auth/login'
+    | '/api/inngest'
     | '/demo/tanstack-query'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -111,6 +123,7 @@ export interface RootRouteChildren {
   AuthRouteRoute: typeof AuthRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  ApiInngestRoute: typeof ApiInngestRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -152,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoTanstackQueryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/inngest': {
+      id: '/api/inngest'
+      path: '/api/inngest'
+      fullPath: '/api/inngest'
+      preLoaderRoute: typeof ApiInngestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_auth/login': {
       id: '/_auth/login'
       path: '/login'
@@ -186,6 +206,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRouteRoute: AuthRouteRouteWithChildren,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  ApiInngestRoute: ApiInngestRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
