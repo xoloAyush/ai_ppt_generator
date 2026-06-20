@@ -2,7 +2,7 @@ import { createServerFn } from '@tanstack/react-start'
 
 import { prisma } from '#/lib/db'
 
-import { requirePresentationUserId } from '../lib'
+import { requirePresentationUserId } from '../lib/server-helpers'
 import { presentationIdInputSchema } from '../types/schemas'
 
 export const listPresentations = createServerFn({ method: 'GET' }).handler(

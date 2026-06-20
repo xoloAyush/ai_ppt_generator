@@ -28,6 +28,7 @@ import { createFileRoute, redirect, useNavigate } from '@tanstack/react-router'
 import { Sparkles, Wand2 } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
+import { presentationQueryKeys } from '#/features/presentaion/hooks/query-keys'
 
 type HomeFormState = {
   content: string
@@ -70,36 +71,36 @@ function HomePage() {
   //   queryFn: () => listPresentations(),
   // })
 
-  // const createMut = useMutation({
-  //   mutationFn: () =>
-  //     createPresentation({
-  //       data: {
-  //         prompt: form.content.trim(),
-  //         slideCount: form.slideCount,
-  //         style: form.style,
-  //         tone: form.tone,
-  //         layout: form.layout,
-  //       },
-  //     }),
-  //   onSuccess: (presentation) => {
-  //     toast.success('Presentation created')
-  //     queryClient.invalidateQueries({ queryKey: presentationQueryKeys.list() })
-  //     navigate({
-  //       to: '/presentations/$presentationId',
-  //       params: { presentationId: presentation.id },
-  //     })
-  //   },
-  //   onError: (e) => {
-  //     toast.error(e instanceof Error ? e.message : 'Could not create presentation')
-  //   },
-  // })
+  const createMut = useMutation({
+    mutationFn:()=>
+      createPresentation({
+        data: {
+          prompt: form.content.trim(),
+          slideCount: form.slideCount,
+          style: form.style,
+          tone: form.tone,
+          layout: form.layout,
+        },
+      }),
+      onSuccess:(presentation)=>{
+        toast.success('Presentation created')
+        queryClient.invalidateQueries({ queryKey: presentationQueryKeys.list() })
+        navigate({
+          to: '/presentations/$presentationId',
+          params: { presentationId: presentation.id },
+        })
+      },
+      onError:(e)=>{
+        toast.error(e instanceof Error ? e.message : 'Could not create presentation')
+      }
+  })
 
   const handleGenerate = () => {
     if (!form.content.trim()) {
       toast.error('Please enter your content first')
       return
     }
-    // createMut.mutate()
+    createMut.mutate()
   }
 
   return (
@@ -242,7 +243,7 @@ function HomePage() {
             <Button
               size="lg"
               onClick={handleGenerate}
-              // disabled={createMut.isPending || !form.content.trim()}
+              disabled={createMut.isPending || !form.content.trim()}
               className="rounded-xl px-8 gap-2 font-semibold"
             ><Wand2 className="size-5" />
             Generate PPT
